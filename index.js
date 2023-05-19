@@ -28,52 +28,30 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const toyServiceCollection = client.db('toyHouse').collection('toyService'); 
-    const toyBookingCollection = client.db('toyHouse').collection('toyService');
+    const serviceCollection = client.db('housetoyes').collection('carhouse'); 
 
-    //
-app.get('/toyService', async(req, res) =>{
-  const cursor = toyServiceCollection.find();
+    
+app.get('/carhouse', async(req, res) =>{
+  const cursor = serviceCollection.find();
   const result = await cursor.toArray();
   res.send(result)
 })
 
-
-//
-app.get('/toyService/:id', async (req, res) => {
+app.get('/carhouse/:id', async(req, res) =>{
   const id = req.params.id;
-  const query = { _id: new ObjectId(id) }
+  const query ={_id: new ObjectId(id)}
 
+  const options = {
+    // Include only the `title` and `imdb` fields in the returned document
+    projection: { category_title: 1, price: 1, ratings: 1, img: 1  },
+};
 
-app.get('/toyService', async(req, res) =>{
-  console.log(req.query);
-  const result =await toyBookingCollection.find().toArray();
+  const result = await serviceCollection.findOne(query, options);
   res.send(result)
 })
 
 
-  //
-  app.post('/toyBookings', async (req, res) => {
-    const toyBooking = req.body;
-    console.log(toyBooking);
-    const result = await toyBookingCollection.insertOne(toyBooking);
-    console.log(result); 
-    res.send(result);
-  });
-
-
-
-
-  const options = {
-      // Include only the `title` and `imdb` fields in the returned document
-      projection: { title: 1, price: 1, service_id: 1, img: 1, description: 1, 
-        category_title: 1 },
-  };
-
-  const result = await toyServiceCollection.findOne(query, options);
-  res.send(result);
-})
-
+  
 
 
     // Send a ping to confirm a successful connection
