@@ -5,10 +5,10 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+
 // middleware
 app.use(cors());
 app.use(express.json());
-
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ydthzao.mongodb.net/?retryWrites=true&w=majority`;
@@ -38,7 +38,7 @@ async function run() {
       const query = { _id: new ObjectId(id) };
 
       const options = {
-        // Include only the `title` and `imdb` fields in the returned document
+       
         projection: { category_title: 1, price: 1, ratings: 1, img: 1 },
       };
 
